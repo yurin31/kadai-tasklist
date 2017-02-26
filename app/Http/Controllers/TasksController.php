@@ -50,7 +50,13 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required|max:255',   // 追加
+            'content' => 'required|max:255',
+        ]);
+
         $task = new Task;
+        $task->title = $request->title;    // 追加
         $task->content = $request->content;
         $task->save();
 
@@ -97,11 +103,19 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $task = Task::find($id);
+
+        $this->validate($request, [
+            'title' => 'required|max:255',   // 追加
+            'content' => 'required|max:255',
+        ]);
+
+        $task = new Task;
+        $task->title = $request->title;    // 追加
         $task->content = $request->content;
         $task->save();
 
         return redirect('/');
+    
     }
 
     /**
